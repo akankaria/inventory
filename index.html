@@ -12,6 +12,7 @@
 
 <div class="container">
 
+   <div class="header-div">Inventory Management</div>
   <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#upload-div">Upload CSV</a></li>
     <li><a data-toggle="tab" href="#search-div">Search</a></li>
@@ -21,22 +22,23 @@
 		<div id="upload-div" class="tab-pane fade in active">
 			<br />
 			<table>
+			<tr><td></td><td>OR</td><td></td></tr>
 			<tr>
-				<td>
-					<h3>Enter the CSV data in following textarea</h3>
-					<textarea id="csv-text" style="width:400;height:200"></textarea>	
-					<br /><br />
-					<input type="button" onclick="javascript:upload_csv_data();" value="POST CSV data"/>
-					<br />
-					<br />
-				</td>
-				<td style="border-left:1px solid #CCCCCC"> </td>
 				<td>
 					<h3>Upload the CSV file</h3>
 					<form action="javascript:upload_csv_file()" enctype="multipart/form-data" method="post">
 						<input type="file" name="file" id="file"><br /><br />
 						<input type="submit" value="Upload">
 					</form>
+					<br />
+					<br />
+				</td>
+				<td style="border-left:1px solid #CCCCCC"> </td>
+				<td>
+					<h3>Enter the CSV data in following textarea</h3>
+					<textarea id="csv-text" style="width:400;height:200"></textarea>	
+					<br /><br />
+					<input type="button" onclick="javascript:upload_csv_data();" value="POST CSV data"/>
 				</td>
 			</tr>
 			</table>
@@ -126,7 +128,12 @@
 			{
 				var tmp = data.output.substring(1, data.output.length-2);
 				tmp = tmp.replace(/\'/g, "\"");
+				tmp = tmp.replace(/\(/g, "\"\[");
+				tmp = tmp.replace(/\)/g, "\]\"");
+				
 				var output = JSON.stringify(JSON.parse(tmp), null, 2);
+
+
 				document.getElementById('object-status').innerHTML = "<br /> The object state is : <br /><textarea>" + output + " </textarea>";
 			}
 			else
