@@ -2,14 +2,15 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
-var url = 'mongodb://ec2-54-202-82-15.us-west-2.compute.amazonaws.com:27017/inventory';
 var globalDb;
 var app = express();
 var formidable = require('formidable')
 var path = require('path')
 var fs = require('fs');
 var csvFileName = '';
+var serverName = 'ec2-54-202-82-15.us-west-2.compute.amazonaws.com';
 
+var url = 'mongodb://' + serverName + ':27017/inventory';
 app.use(bodyParser())
 
 // Connect to the mongoDB instance on which the database is hosted
@@ -132,7 +133,7 @@ app.get('/search', function(req, res) {
 });
 
 // Start the nodeJS server to accept connect requests from the webpage
-var server = app.listen(80, 'ec2-54-202-82-15.us-west-2.compute.amazonaws.com', function() {
+var server = app.listen(80, serverName, function() {
 
     var host = server.address().address
     var port = server.address().port

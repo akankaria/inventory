@@ -1,11 +1,11 @@
 <html>
 <head>
-	<title>Order search</title>
+	<title>Object search</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" href="./order.css">
+	<link rel="stylesheet" href="./css/order.css">
 </head>
 
 <body>
@@ -63,13 +63,17 @@
 </div>	
 	
 <script type="text/javascript">
+
+	var serverName = 'ec2-54-202-82-15.us-west-2.compute.amazonaws.com';
+
+	// Upload CSV file
 	function upload_csv_file()
 	{
 		var blobFile = $('#file')[0].files[0];
 		var formData = new FormData();
 		formData.append("fileToUpload", blobFile);
 		
-		var url = "http://ec2-54-202-82-15.us-west-2.compute.amazonaws.com:80/uploadCSVFile";
+		var url = "http://" + serverName + ":80/uploadCSVFile";
 		$.ajax({
 		  url: url,
 		  type:'post',
@@ -85,12 +89,13 @@
 	    });
 	}
 	
+	// Upload CSV data directly
 	function upload_csv_data()
 	{
 		var txt = document.getElementById('csv-text').value;
 		txt = txt.replace(/\[/g, "(").replace(/\]/g, ")");
 		
-		var url = "http://ec2-54-202-82-15.us-west-2.compute.amazonaws.com:80/uploadCSVData";
+		var url = "http://" + serverName + ":80/uploadCSVData";
 		$.ajax({
 		  url: url,
 		  type:'post',
@@ -104,13 +109,14 @@
 	    });
    	}
 	
+	// Search for an object
 	function search_in_db()
 	{
 		var id = document.getElementById('object-id').value;
 		var type = document.getElementById('object-type').value;
 		var timestamp = document.getElementById('timestamp').value;
 		
-		var url = "http://ec2-54-202-82-15.us-west-2.compute.amazonaws.com:80/search?id=" + id + "&type=" + type + "&timestamp=" + timestamp;
+		var url = "http://" + serverName + ":80/search?id=" + id + "&type=" + type + "&timestamp=" + timestamp;
 		$.ajax({
 		  url: url,
 		  type:'get',
