@@ -106,7 +106,7 @@ app.get('/search', function(req, res) {
     // mongo DB search query using nodeJS driver
     globalDb.collection('inventoryLog', function(err, collection) {
         collection.find({
-            "object_type": req.param('type'),
+            "object_type": { $regex : new RegExp(req.param('type'), "i") },
             "object_id": req.param('id'),
             "timestamp": {
                 $lt: parseInt(req.param('timestamp')) + 1
